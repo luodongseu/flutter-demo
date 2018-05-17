@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'routes/List.dart';
 
-void main() => runApp(new MyApp());
-
-class MyApp extends StatelessWidget {
+class List extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter List',
       theme: new ThemeData(
         // This is the theme of your application.
         //
@@ -20,16 +17,13 @@ class MyApp extends StatelessWidget {
         // counter didn't reset back to zero; the application is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: new MyHomePage(title: 'Flutter Demo Home Page'),
-      routes: <String, WidgetBuilder>{
-        '/a': (BuildContext context) => new List(),
-      },
+      home: new ListPage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class ListPage extends StatefulWidget {
+  ListPage({Key key, this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -43,36 +37,25 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
+  _ListPageState createState() => new _ListPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _ListPageState extends State<ListPage> {
   int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      // This call to setState tells the Flutter framework that something has
+      // changed in this State, which causes it to rerun the build method below
+      // so that the display can reflect the updated values. If we changed
+      // _counter without calling setState(), then the build method would not be
+      // called again, and so nothing would appear to happen.
+      _counter++;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    void _incrementCounter() {
-      // setState(() {
-      //   // This call to setState tells the Flutter framework that something has
-      //   // changed in this State, which causes it to rerun the build method below
-      //   // so that the display can reflect the updated values. If we changed
-      //   // _counter without calling setState(), then the build method would not be
-      //   // called again, and so nothing would appear to happen.
-      //   _counter++;
-      // });
-      // Navigator.pushNamed(context, '/a');
-      Navigator.push(context,
-          new MaterialPageRoute<bool>(builder: (BuildContext context) {
-        return new Center(
-          child: new GestureDetector(
-              child: new Text('OK'),
-              onTap: () {
-                Navigator.pop(context, true);
-              }),
-        );
-      }));
-    }
-
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -107,9 +90,13 @@ class _MyHomePageState extends State<MyHomePage> {
             new Text(
               'You have pushed the button this many times:',
             ),
-            new Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
+            new Center(
+              child: new FlatButton(
+                child: new Text('POP'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
             ),
           ],
         ),
